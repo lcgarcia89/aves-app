@@ -1,0 +1,8 @@
+{
+  "name": "aves",
+  "app_id": "f4492b03",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
