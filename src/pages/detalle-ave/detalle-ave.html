@@ -1,0 +1,21 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Detalle
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-img *ngIf="bird" src={{bird.image}} item-left></ion-img>
+  <h3 text-left *ngIf="bird">
+    {{bird.name}}
+    <!--<ion-icon [name]="selectedItem.icon"></ion-icon>-->
+  </h3>
+  <p *ngIf="bird">Bird sightings: {{bird.sightings}}</p>
+  <p *ngIf="bird">Description: {{bird.description}}</p>
+  <!--<h4 text-center *ngIf="selectedItem">-->
+    <!--You navigated here from <b>{{selectedItem.title}}</b>-->
+  <!--</h4>-->
+</ion-content>

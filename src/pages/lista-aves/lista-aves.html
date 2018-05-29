@@ -1,0 +1,20 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Listado de aves
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let bird of birds" (click)="birdTapped($event, bird)">
+      <ion-img src={{bird.image}} item-left></ion-img>
+      {{bird.name}}
+      <div item-right [ngStyle]="{color: bird.mine==0?'red':'green'}">
+        {{bird.sightings}}
+      </div>
+    </button>
+  </ion-list>
+</ion-content>

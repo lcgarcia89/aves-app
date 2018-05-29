@@ -1,14 +1,54 @@
+
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Login
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <div>
+    <img src="assets/imgs/RAVEN_OUTLINE.jpg" style="display: block; width: 35%; height: 35%; margin-left: auto; margin-right: auto;">
+  </div>
+  <form [formGroup]="loginFormGroup" (ngSubmit)="loginForm()">
+    <div formGroupName="user">
+      <ion-item>
+        <ion-label name="email">
+          <span class="input-label">Email</span>
+        </ion-label>
+        <ion-input type="text" formControlName="email"></ion-input>
+      </ion-item>
+    </div>
+      <!--
+    <label class="item item-input item-stacked-label" id="login-input5" name="password">
+      <span class="input-label">Password</span>
+      <input type="password" placeholder="">
+    </label>
+    -->
+    <button ion-button full type="submit" id="login-button1" (click)="validateLogin()">Login</button>
+  </form>
 </ion-content>
+
+<!--
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Demo 103
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let user of users">
+      <ion-avatar item-start>
+        <img [src]="user.picture.medium">
+      </ion-avatar>
+      <h2>{{ user.name.first | uppercase }}</h2>
+      <p>{{ user.email }}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+-->
