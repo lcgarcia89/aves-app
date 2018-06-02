@@ -16,6 +16,7 @@
         </ion-label>
         <ion-input name="place" type="text" formControlName="place"></ion-input>
       </ion-item>
+      <button ion-button full type="submit" id="addSighting-button" [disabled]="!locationReady">Añadir Avistamiento</button>
     </div>
   </form>
 </ion-content>

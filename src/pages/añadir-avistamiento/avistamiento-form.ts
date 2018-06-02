@@ -11,6 +11,8 @@ export class Avistamiento implements OnInit{
 
   sightingFormGroup: FormGroup;
 
+  locationReady = false;
+
 
 
   constructor(public navCtrl: NavController) {
@@ -47,10 +49,16 @@ export class Avistamiento implements OnInit{
 
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
+      alert("navigator.geolocation works well");
       console.log("navigator.geolocation works well");
+      this.locationReady = true;
     }
   }
 
+
+  addSighting() {
+
+  }
 
 
 
