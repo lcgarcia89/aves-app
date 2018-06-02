@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { BirdsServiceProvider } from '../../providers/birds-service/birds-service';
 import { Bird } from '../../model/bird';
+import {ListaAves} from "../lista-aves/lista-aves";
+import {Avistamiento} from "../añadir-avistamiento/avistamiento-form";
+
 
 
 @Component({
@@ -28,8 +31,16 @@ export class DetalleAve implements OnInit{
     this.birdsService.getBirdDetail(this.bird_id).subscribe(
       (data) => {
         console.log(data[0]);
-        this.bird = new Bird(data[0]['id'], data[0]['idUser'], data[0]['bird_image'], data[0]['bird_name'], data[0]['bird_description'], data[0]['bird_sightings']);
-        console.log('Bird ---> ' +  this.bird.sightings);
+        this.bird = new Bird(data[0]['id'], data[0]['idUser'], data[0]['bird_image'], data[0]['bird_name'], data[0]['bird_description'], data[0]['bird_sightings']
+        , data[0]['sightings_list']);
+        console.log('Bird name ---> ' + this.bird.name);
+        console.log('Sighting Objects ---> ' + this.bird.sightings_list);
+        //
+        // console.log('Bird ---> ' + this.bird.sightings_list['place']);
+        console.log('Sighting List ---> ');
+        this.bird.sightings_list.forEach( function(value) {
+          console.log(value.place);
+        });
         // data.forEach( bird => {
         //   this.birds.push({id: bird.id, name: bird.bird_name, image: bird.bird_image, sightings: bird.bird_sightings, mine: bird.mine});
         // });
@@ -38,6 +49,13 @@ export class DetalleAve implements OnInit{
         console.log(error);
       }
     )
+  }
+
+
+  addSighting(event, id) {
+    console.log('Id del pollo: ' + id);
+    this.navCtrl.push(Avistamiento);
+
   }
 
 }

@@ -13,6 +13,7 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
 import { BirdsServiceProvider } from '../providers/birds-service/birds-service';
 import { ListaAves } from "../pages/lista-aves/lista-aves";
 import {DetalleAve} from "../pages/detalle-ave/detalle-ave";
+import {Avistamiento} from "../pages/añadir-avistamiento/avistamiento-form";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {DetalleAve} from "../pages/detalle-ave/detalle-ave";
     HomePage,
     MainMenu,
     ListaAves,
-    DetalleAve
+    DetalleAve,
+    Avistamiento
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,8 @@ import {DetalleAve} from "../pages/detalle-ave/detalle-ave";
     HomePage,
     MainMenu,
     ListaAves,
-    DetalleAve
+    DetalleAve,
+    Avistamiento
   ],
   providers: [
     StatusBar,

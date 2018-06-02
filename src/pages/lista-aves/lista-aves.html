@@ -10,7 +10,7 @@
 <ion-content>
   <ion-list>
     <button ion-item *ngFor="let bird of birds" (click)="birdTapped($event, bird)">
-      <ion-img src={{bird.image}} item-left></ion-img>
+      <img [height]="20" [width]="20" src={{bird.image}} item-left>
       {{bird.name}}
       <div item-right [ngStyle]="{color: bird.mine==0?'red':'green'}">
         {{bird.sightings}}

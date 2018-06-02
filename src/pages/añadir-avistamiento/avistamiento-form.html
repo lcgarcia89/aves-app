@@ -1,0 +1,22 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Añadir Avistamiento
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="sightingFormGroup" (ngSubmit)="sightingForm()">
+    <div formGroupName="sighting">
+      <ion-item>
+        <ion-label name="place" for="place">
+          <span class="input-label">Lugar</span>
+        </ion-label>
+        <ion-input name="place" type="text" formControlName="place"></ion-input>
+      </ion-item>
+    </div>
+  </form>
+</ion-content>
+

@@ -7,15 +7,27 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-img *ngIf="bird" src={{bird.image}} item-left></ion-img>
-  <h3 text-left *ngIf="bird">
-    {{bird.name}}
-    <!--<ion-icon [name]="selectedItem.icon"></ion-icon>-->
-  </h3>
-  <p *ngIf="bird">Bird sightings: {{bird.sightings}}</p>
-  <p *ngIf="bird">Description: {{bird.description}}</p>
-  <!--<h4 text-center *ngIf="selectedItem">-->
-    <!--You navigated here from <b>{{selectedItem.title}}</b>-->
-  <!--</h4>-->
+<ion-content padding >
+  <ng-container *ngIf="bird">
+    <img src={{bird.image}} [width]="75" [height]="75"/>
+    <h3 text-left *ngIf="bird">
+      {{bird.name}}
+      <!--<ion-icon [name]="selectedItem.icon"></ion-icon>-->
+    </h3>
+    <p>Bird sightings: {{bird.sightings}}</p>
+    <p>Description: {{bird.description}}</p>
+    <button ion-button full (click)="addSighting($event, bird.id)">Añadir avistamiento</button>
+
+    <p>Listado de avistamientos</p>
+    <ion-list *ngIf="bird">
+      <ion-item *ngFor="let sighting of bird.sightings_list">
+        <div>
+          {{sighting.place}}
+        </div>
+      </ion-item>
+    </ion-list>
+    <!--<h4 text-center *ngIf="selectedItem">-->
+      <!--You navigated here from <b>{{selectedItem.title}}</b>-->
+    <!--</h4>-->
+  </ng-container>
 </ion-content>
