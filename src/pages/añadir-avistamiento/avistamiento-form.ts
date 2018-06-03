@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { NavController } from 'ionic-angular';
-
+import { NavController, ToastController } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-avistamiento-form',
@@ -11,11 +11,20 @@ export class Avistamiento implements OnInit{
 
   sightingFormGroup: FormGroup;
 
-  locationReady = false;
+  locationReady: boolean;
+
+  disableButton: boolean;
 
 
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private geolocation: Geolocation, public toastCtrl: ToastController) {
+    //this.locationReady = false;
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+      console.log("navigator.geolocation works well");
+      //this.getLocation();
+      return true;
+    }
 
   }
 
@@ -46,20 +55,32 @@ export class Avistamiento implements OnInit{
       })
     } );
 
+    this.disableButton = true;
+    this.getLocation();
+  }
 
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-      alert("navigator.geolocation works well");
-      console.log("navigator.geolocation works well");
+
+  getLocation(){
+
+    alert("getLocation");
+    this.geolocation.getCurrentPosition().then((res) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+      //let location= 'lat'+ res.coords.latitude +'lang'+ res.coords.longitude;
+      let location='lat '+res.coords.latitude+' lang '+res.coords.longitude;
+      // let toast = this.toastCtrl.create({
+      //   message: location,
+      //   duration: 3000
+      // });
+      // toast.present();
+
+      alert(location);
+
       this.locationReady = true;
-    }
+
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
-
-
-  addSighting() {
-
-  }
-
-
 
 }
