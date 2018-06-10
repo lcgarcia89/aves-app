@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { NavController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { User } from '../../model/user';
-import {ListaAves} from "../lista-aves/lista-aves";
+import { ListaAves } from "../lista-aves/lista-aves";
+import { AveForm } from "../añadir-ave/ave-form";
+import { HomePage } from "../home/home";
 
 
 @Component({
@@ -12,13 +13,12 @@ import {ListaAves} from "../lista-aves/lista-aves";
 })
 export class MainMenu{
 
-  loginFormGroup: FormGroup;
 
   user: User;
 
   status: string;
 
-  constructor(public navCtrl: NavController, public userService: UserServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {
 
   }
 
@@ -26,5 +26,19 @@ export class MainMenu{
     this.navCtrl.push(ListaAves);
   }
 
+  anadirAve(){
+    this.navCtrl.push(AveForm);
+  }
+
+  informacion(){
+    console.log('Info button pressed, but nothing happened');
+    return;
+  }
+
+  logout(){
+    this.userService.logoutUser();
+
+    this.navCtrl.setRoot(HomePage);
+  }
 
 }

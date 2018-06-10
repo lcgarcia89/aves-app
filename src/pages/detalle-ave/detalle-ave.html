@@ -9,19 +9,18 @@
 
 <ion-content padding >
   <ng-container *ngIf="bird">
-    <img src={{bird.image}} [width]="75" [height]="75"/>
-    <h3 text-left *ngIf="bird">
-      {{bird.name}}
-      <!--<ion-icon [name]="selectedItem.icon"></ion-icon>-->
+    <img class="head" src={{bird.image}}/>
+    <h3 *ngIf="bird">
+      <div class="bird-name" >{{bird.name}}</div>
     </h3>
-    <p>Bird sightings: {{bird.sightings}}</p>
-    <p>Description: {{bird.description}}</p>
-    <button ion-button full (click)="addSighting($event, bird.id)">Añadir avistamiento</button>
+    <p><b>Avistamientos:</b> {{bird.sightings}}</p>
+    <p><b>Descripción:</b> {{bird.description}}</p>
+    <button ion-button full class="button-dark" (click)="addSighting($event, bird.id)">Añadir avistamiento</button>
 
-    <p>Listado de avistamientos</p>
+    <p class="text">Listado de avistamientos</p>
     <ion-list *ngIf="bird">
       <ion-item *ngFor="let sighting of bird.sightings_list">
-        <div>
+        <div class="list-item">
           {{sighting.place}}
         </div>
       </ion-item>

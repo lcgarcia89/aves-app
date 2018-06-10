@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <div>
-    <img src="assets/imgs/RAVEN_OUTLINE.jpg" style="display: block; width: 35%; height: 35%; margin-left: auto; margin-right: auto;">
+    <img src="assets/imgs/RAVEN_OUTLINE.jpg" style="display: block; width: 35%; height: 35%; max-width: 250px; margin-left: auto; margin-right: auto;">
   </div>
   <form [formGroup]="loginFormGroup" (ngSubmit)="loginForm()">
     <div formGroupName="user">
@@ -19,36 +19,18 @@
         </ion-label>
         <ion-input type="text" formControlName="email"></ion-input>
       </ion-item>
+      <span *ngIf="!loginFormGroup.get('user.email').valid && loginFormGroup.get('user.email').touched" class="help-block">
+        <span *ngIf="loginFormGroup.get('user.email').errors['pattern']" class="error">El e-mail no es válido.</span></span>
+      <ion-item>
+        <ion-label name="password">
+          <span class="input-label">Password</span>
+        </ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <span *ngIf="!loginFormGroup.get('user.password').valid && loginFormGroup.get('user.password').touched" class="help-block">
+        <span *ngIf="loginFormGroup.get('user.password').errors['pattern']" class="error">La contraseña no es válida.<br></span>
+        <span *ngIf="loginFormGroup.get('user.password').errors['minlength']" class="error">La contraseña es demasiado corta.</span></span>
     </div>
-      <!--
-    <label class="item item-input item-stacked-label" id="login-input5" name="password">
-      <span class="input-label">Password</span>
-      <input type="password" placeholder="">
-    </label>
-    -->
-    <button ion-button full type="submit" id="login-button1" (click)="validateLogin()">Login</button>
+    <button ion-button full class="button-dark" [disabled]="!loginFormGroup.valid" type="submit" (click)="validateLogin()">Login</button>
   </form>
 </ion-content>
-
-<!--
-<ion-header>
-  <ion-navbar color="primary">
-    <ion-title>
-      Demo 103
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let user of users">
-      <ion-avatar item-start>
-        <img [src]="user.picture.medium">
-      </ion-avatar>
-      <h2>{{ user.name.first | uppercase }}</h2>
-      <p>{{ user.email }}</p>
-    </ion-item>
-  </ion-list>
-</ion-content>
-
--->

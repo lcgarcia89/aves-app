@@ -1,3 +1,10 @@
-page-home {
+page-lista-aves {
 
+  button.button-list {
+    background: #F0F0F0;
+  }
+
+  button.button-list:nth-child(odd) {
+    background: white;
+  }
 }

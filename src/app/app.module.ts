@@ -13,8 +13,10 @@ import { MainMenu } from '../pages/main-menu/main-menu';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { BirdsServiceProvider } from '../providers/birds-service/birds-service';
 import { ListaAves } from "../pages/lista-aves/lista-aves";
-import {DetalleAve} from "../pages/detalle-ave/detalle-ave";
-import {Avistamiento} from "../pages/añadir-avistamiento/avistamiento-form";
+import { DetalleAve } from "../pages/detalle-ave/detalle-ave";
+import { Avistamiento } from "../pages/añadir-avistamiento/avistamiento-form";
+import { AveForm } from "../pages/añadir-ave/ave-form";
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -23,14 +25,16 @@ import {Avistamiento} from "../pages/añadir-avistamiento/avistamiento-form";
     MainMenu,
     ListaAves,
     DetalleAve,
-    Avistamiento
+    Avistamiento,
+    AveForm
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule.forRoot(MyApp)
+    IonicStorageModule.forRoot(),
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +43,8 @@ import {Avistamiento} from "../pages/añadir-avistamiento/avistamiento-form";
     MainMenu,
     ListaAves,
     DetalleAve,
-    Avistamiento
+    Avistamiento,
+    AveForm
   ],
   providers: [
     StatusBar,

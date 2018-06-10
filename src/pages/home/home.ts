@@ -23,20 +23,15 @@ export class HomePage implements OnInit{
 
   }
 
-
-  validateLogin() {
-
-  }
-
   loginForm() {
-    console.log('Email from form: ' + this.loginFormGroup.get('user.email').value);
-    this.userService.getUsers().subscribe(
+    this.userService.getUsers(this.loginFormGroup.get('user.email').value, this.loginFormGroup.get('user.password').value).subscribe(
       (data) => {
-        console.log(data);
-        this.id_user = 'asfd';
-        this.status = data ['status'];
+        this.id_user = data['id'];
+        this.status = data['status'];
         if(this.status=='OK'){
-          this.navCtrl.push(MainMenu);
+          console.log('Logged user with id: ' + this.id_user);
+          this.userService.loginUser(this.id_user);
+          this.navCtrl.push(MainMenu, {id: this.id_user});
         }
       },
         (error) =>{
@@ -50,20 +45,12 @@ export class HomePage implements OnInit{
   ngOnInit() {
     this.loginFormGroup = new FormGroup({
       'user': new FormGroup({
-        'email': new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z]+[A-Za-z ]+$')])
+        'email': new FormControl('', [Validators.required,
+          Validators.pattern('(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])')]),
+        'password': new FormControl('', [Validators.required,
+          Validators.pattern('^[ A-Za-z0-9_@./#&+-]+$'), Validators.minLength(4)])
       })
     } );
   }
 
-  // ionViewDidLoad(){
-  //   this.userService.getUsers()
-  //     .subscribe(
-  //       (data) => { // Success
-  //         this.users = data['results'];
-  //       },
-  //       (error) =>{
-  //         console.error(error);
-  //       }
-  //     )
-  // }
 }

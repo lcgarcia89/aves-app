@@ -11,15 +11,15 @@
   <form [formGroup]="sightingFormGroup" (ngSubmit)="sightingForm()">
     <div formGroupName="sighting">
       <ion-item>
-ç        <ion-label name="place" for="place">
+        <ion-label name="place" for="place">
           <span class="input-label">Lugar</span>
         </ion-label>
         <ion-input id="place" name="place" type="text" formControlName="place"></ion-input>
       </ion-item>
 
       <span *ngIf="!sightingFormGroup.get('sighting.place').valid && sightingFormGroup.get('sighting.place').touched" class="help-block">
-        <span *ngIf="sightingFormGroup.get('sighting.place').errors['pattern']" class="error help-block">First name is invalid.</span></span>
-      <button ion-button full type="submit" id="addSighting-button" [disabled]="!locationReady">Añadir Avistamiento</button>
+        <span *ngIf="sightingFormGroup.get('sighting.place').errors['pattern']" class="error">El lugar no es válido.</span></span>
+      <button ion-button full class="button-dark" type="submit" [disabled]="!locationReady || !sightingFormGroup.valid">Añadir Avistamiento</button>
     </div>
   </form>
 </ion-content>

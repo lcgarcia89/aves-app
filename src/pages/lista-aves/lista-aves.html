@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let bird of birds" (click)="birdTapped($event, bird)">
+    <button class="button-list" ion-item *ngFor="let bird of birds" (click)="birdTapped($event, bird)">
       <img [height]="20" [width]="20" src={{bird.image}} item-left>
       {{bird.name}}
       <div item-right [ngStyle]="{color: bird.mine==0?'red':'green'}">
@@ -17,4 +17,5 @@
       </div>
     </button>
   </ion-list>
+  <button ion-button full class="button-dark" type="button" id="anadir-ave-button" (click)="anadirAve()">Añadir ave</button>
 </ion-content>

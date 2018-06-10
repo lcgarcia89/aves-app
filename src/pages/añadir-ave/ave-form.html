@@ -1,0 +1,49 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Añadir Ave
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="birdFormGroup" (ngSubmit)="addBirdForm()">
+    <div formGroupName="birdFormGroup">
+      <ion-item>
+        <ion-label name="name" for="name">
+          <span class="input-label">Nombre</span>
+        </ion-label>
+        <ion-input id="name" name="name" type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <span *ngIf="!birdFormGroup.get('birdFormGroup.name').valid && birdFormGroup.get('birdFormGroup.name').touched" class="help-block">
+        <span *ngIf="birdFormGroup.get('birdFormGroup.name').errors['pattern']" class="error">El nombre del ave no es válido.</span></span>
+      <ion-item>
+        <ion-label name="description" for="description">
+          <span class="input-label">Descripción</span>
+        </ion-label>
+        <ion-textarea id="description" name="description" type="text" formControlName="description"></ion-textarea>
+      </ion-item>
+      <span *ngIf="!birdFormGroup.get('birdFormGroup.description').valid && birdFormGroup.get('birdFormGroup.description').touched" class="help-block">
+        <span *ngIf="birdFormGroup.get('birdFormGroup.description').errors['pattern']" class="error">La descripción contiene caracteres no válidos.<br></span>
+        <span *ngIf="birdFormGroup.get('birdFormGroup.description').errors['minlength']" class="error">Debe contener al menos 20 caracteres</span></span>
+      <ion-item>
+        <ion-label name="chkSighting" for="chkSighting">
+          <span class="input-label">Avistamiento</span>
+        </ion-label>
+        <ion-checkbox [(ngModel)]="chkSighting" id="chkSighting" name="chkSighting" formControlName="chkSighting"
+        (ionChange)="getLocation($event)"></ion-checkbox>
+      </ion-item>
+      <ion-item *ngIf="chkSighting">
+        <ion-label name="place" for="place">
+          <span class="input-label">Lugar</span>
+        </ion-label>
+        <ion-input id="place" name="place" type="text" formControlName="place" (ionChange)="checkValidPlace()"></ion-input>
+      </ion-item>
+      <span *ngIf="!birdFormGroup.get('birdFormGroup.place').valid && birdFormGroup.get('birdFormGroup.place').touched" class="help-block">
+        <span *ngIf="birdFormGroup.get('birdFormGroup.place').errors['pattern']" class="error">El lugar no válidos.</span></span>
+      <button ion-button full class="button-dark" type="submit" [disabled]="!sightingValid || !birdFormGroup.valid">Añadir Ave</button>
+    </div>
+  </form>
+</ion-content>
+

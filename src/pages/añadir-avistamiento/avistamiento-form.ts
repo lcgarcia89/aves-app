@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { BirdsServiceProvider } from '../../providers/birds-service/birds-service';
+
 
 @Component({
   selector: 'page-avistamiento-form',
@@ -13,68 +15,61 @@ export class Avistamiento implements OnInit{
 
   locationReady: boolean;
 
-  disableButton: boolean;
+  bird_id: string;
+
+  latitude: number;
+
+  longitude: number;
 
 
 
-  constructor(public navCtrl: NavController, private geolocation: Geolocation, public toastCtrl: ToastController) {
-    //this.locationReady = false;
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-      console.log("navigator.geolocation works well");
-      //this.getLocation();
-      return true;
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation, public birdsService: BirdsServiceProvider) {
 
   }
 
 
   sightingForm() {
-    console.log('Place from form: ' + this.sightingFormGroup.get('sighting.place').value);
-    // this.userService.getUsers().subscribe(
-    //   (data) => {
-    //     console.log(data);
-    //     this.id_user = 'asfd';
-    //     this.status = data ['status'];
-    //     if(this.status=='OK'){
-    //       this.navCtrl.push(MainMenu);
-    //     }
-    //   },
-    //     (error) =>{
-    //       console.error(error);
-    //     }
-    // )
+
+    this.birdsService.postSighting(this.bird_id, this.sightingFormGroup.get('sighting.place').value, this.latitude, this.longitude).subscribe(
+      (data) => {
+        let status = data ['status'];
+        if(status=='OK'){
+          console.log('sighting added');
+          this.navCtrl.pop();
+        }
+      },
+        (error) =>{
+          console.error(error);
+        }
+    )
   }
 
 
   // form initialised
   ngOnInit() {
+
+    this.bird_id = this.navParams.get('bird_id');
+
     this.sightingFormGroup = new FormGroup({
       'sighting': new FormGroup({
-        'place': new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z]+[A-Za-z ]+$')])
+        'place': new FormControl('', [Validators.required, Validators.pattern('^[A-Za-záéíóúÁÉÍÓÚñÑ]+[A-Za-záéíóúÁÉÍÓÚñÑ ]*$')])
       })
     } );
 
-    this.disableButton = true;
     this.getLocation();
   }
 
 
   getLocation(){
 
-    alert("getLocation");
-    this.geolocation.getCurrentPosition().then((res) => {
-      // resp.coords.latitude
-      // resp.coords.longitude
-      //let location= 'lat'+ res.coords.latitude +'lang'+ res.coords.longitude;
-      let location='lat '+res.coords.latitude+' lang '+res.coords.longitude;
-      // let toast = this.toastCtrl.create({
-      //   message: location,
-      //   duration: 3000
-      // });
-      // toast.present();
+    let options = {timeout: 10000, enableHighAccuracy: true, maximumAge: 3600};
+    this.geolocation.getCurrentPosition(options).then((res) => {
 
-      alert(location);
+
+      this.latitude = res.coords.latitude;
+      this.longitude = res.coords.longitude;
+
+      console.log('Got location --- latitude: ' + this.latitude + ' / longitude: ' + this.longitude);
 
       this.locationReady = true;
 
