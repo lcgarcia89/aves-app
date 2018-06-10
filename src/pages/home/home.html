@@ -17,7 +17,7 @@
         <ion-label name="email">
           <span class="input-label">Email</span>
         </ion-label>
-        <ion-input type="text" formControlName="email"></ion-input>
+        <ion-input type="email" formControlName="email"></ion-input>
       </ion-item>
       <span *ngIf="!loginFormGroup.get('user.email').valid && loginFormGroup.get('user.email').touched" class="help-block">
         <span *ngIf="loginFormGroup.get('user.email').errors['pattern']" class="error">El e-mail no es válido.</span></span>

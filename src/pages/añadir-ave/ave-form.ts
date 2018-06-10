@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { BirdsServiceProvider } from '../../providers/birds-service/birds-service';
 import { Geolocation } from "@ionic-native/geolocation";
 import { UserServiceProvider } from '../../providers/user-service/user-service';
