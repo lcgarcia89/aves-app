@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { NavController } from 'ionic-angular';
+import {Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NavController, ToastController, LoadingController } from 'ionic-angular';
 import { BirdsServiceProvider } from '../../providers/birds-service/birds-service';
 import { Geolocation } from "@ionic-native/geolocation";
 import { UserServiceProvider } from '../../providers/user-service/user-service';
@@ -28,7 +28,9 @@ export class AveForm implements OnInit {
 
 
 
-  constructor(public navCtrl: NavController, public birdsService: BirdsServiceProvider, private geolocation: Geolocation, public userService: UserServiceProvider) {
+  constructor(public navCtrl: NavController, public birdsService: BirdsServiceProvider, private geolocation: Geolocation,
+              public userService: UserServiceProvider, public toastCtrl: ToastController,
+              public loadingCtrl: LoadingController) {
 
   }
 
@@ -58,10 +60,6 @@ export class AveForm implements OnInit {
       this.sightingChecked = true;
       let options = {timeout: 10000, enableHighAccuracy: true, maximumAge: 3600};
       this.geolocation.getCurrentPosition(options).then((res) => {
-        // resp.coords.latitude
-        // resp.coords.longitude
-        //let location= 'lat'+ res.coords.latitude +'lang'+ res.coords.longitude;
-        //let location='lat '+res.coords.latitude+' lang '+res.coords.longitude;
 
         this.latitude = res.coords.latitude;
         this.longitude = res.coords.longitude;
@@ -76,6 +74,8 @@ export class AveForm implements OnInit {
 
       }).catch((error) => {
         console.log('Error getting location', error);
+        let toast = this.toastCtrl.create({message: 'No se ha podido obtener la localización del dispositivo', showCloseButton:true, closeButtonText: 'Ok'});
+        toast.present();
         this.sightingValid = false;
       });
     }
@@ -86,8 +86,8 @@ export class AveForm implements OnInit {
   }
 
   addBirdForm() {
-    console.log('id_user: ' + this.id_user);
-
+    let loading = this.loadingCtrl.create({content: 'Cargando...'});
+    loading.present();
     if(this.sightingChecked==true){
       console.log('Latitude: ' + this.latitude);
       console.log('Longitude: ' + this.longitude);
@@ -97,16 +97,22 @@ export class AveForm implements OnInit {
         this.birdFormGroup.get('birdFormGroup.place').value,
         this.latitude, this.longitude).subscribe(
         (data) => {
+          loading.dismissAll();
           console.log(data);
           this.status = data['status'];
         },
         (error) =>{
+          loading.dismissAll();
           console.error(error);
+          let toast = this.toastCtrl.create({message: 'Ha ocurrido un error', duration: 3000, position: 'bottom'});
+          toast.present();
         },
         () => {
           console.log('Status: ' + this.status);
           if(this.status == 'OK') {
             console.log('bird with sighting added');
+            let toast = this.toastCtrl.create({message: 'El ave ha sido añadida', duration: 3000, position: 'bottom'});
+            toast.present();
             this.navCtrl.pop();
           }
         }
@@ -114,16 +120,23 @@ export class AveForm implements OnInit {
     } else {
       this.birdsService.postAddBird(this.id_user, this.birdFormGroup.get('birdFormGroup.name').value, this.birdFormGroup.get('birdFormGroup.description').value).subscribe(
         (data) => {
+          loading.dismissAll();
           console.log(data);
           this.status = data['status'];
         },
         (error) => {
+          loading.dismissAll();
           console.error(error);
+          let toast = this.toastCtrl.create({message: 'Ha ocurrido un error', duration: 3000, position: 'bottom'});
+          toast.present();
         },
         () => {
           console.log('Status: ' + this.status);
           if (this.status == 'OK') {
             console.log('bird added');
+            console.log('bird with sighting added');
+            let toast = this.toastCtrl.create({message: 'El ave ha sido añadida', duration: 3000, position: 'bottom'});
+            toast.present();
             this.navCtrl.pop();
           }
         }

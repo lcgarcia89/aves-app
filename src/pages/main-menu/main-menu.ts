@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { User } from '../../model/user';
 import { ListaAves } from "../lista-aves/lista-aves";
@@ -18,7 +18,8 @@ export class MainMenu{
 
   status: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserServiceProvider) {
+  constructor(public navCtrl: NavController, public userService: UserServiceProvider, public toastCtrl: ToastController) {
+
 
   }
 
@@ -32,6 +33,8 @@ export class MainMenu{
 
   informacion(){
     console.log('Info button pressed, but nothing happened');
+    let toast = this.toastCtrl.create({message: 'Has presionado "info", pero no ha ocurrido nada', duration: 3000, position: 'bottom'});
+    toast.present();
     return;
   }
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { User } from '../../model/user';
 import { MainMenu } from "../main-menu/main-menu";
@@ -19,15 +19,18 @@ export class HomePage implements OnInit{
   status: string;
   id_user: string;
 
-  constructor(public navCtrl: NavController, public userService: UserServiceProvider) {
+  constructor(public navCtrl: NavController, public userService: UserServiceProvider, public loadingCtrl: LoadingController) {
 
   }
 
   loginForm() {
+    let loading = this.loadingCtrl.create({content: 'Cargando...'});
+    loading.present();
     this.userService.getUsers(this.loginFormGroup.get('user.email').value, this.loginFormGroup.get('user.password').value).subscribe(
       (data) => {
         this.id_user = data['id'];
         this.status = data['status'];
+        loading.dismissAll();
         if(this.status=='OK'){
           console.log('Logged user with id: ' + this.id_user);
           this.userService.loginUser(this.id_user);
@@ -35,6 +38,7 @@ export class HomePage implements OnInit{
         }
       },
         (error) =>{
+          loading.dismissAll();
           console.error(error);
         }
     )

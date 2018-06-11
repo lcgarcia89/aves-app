@@ -31,6 +31,6 @@
         <span *ngIf="loginFormGroup.get('user.password').errors['pattern']" class="error">La contraseña no es válida.<br></span>
         <span *ngIf="loginFormGroup.get('user.password').errors['minlength']" class="error">La contraseña es demasiado corta.</span></span>
     </div>
-    <button ion-button full class="button-dark" [disabled]="!loginFormGroup.valid" type="submit" (click)="validateLogin()">Login</button>
+    <button ion-button full class="button-dark" [disabled]="!loginFormGroup.valid" type="submit">Login</button>
   </form>
 </ion-content>

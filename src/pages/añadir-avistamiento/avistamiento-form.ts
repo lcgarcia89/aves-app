@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BirdsServiceProvider } from '../../providers/birds-service/birds-service';
 
@@ -23,23 +23,33 @@ export class Avistamiento implements OnInit{
 
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation, public birdsService: BirdsServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation,
+              public birdsService: BirdsServiceProvider, public toastCtrl: ToastController,
+              public loadingCtrl: LoadingController) {
 
   }
 
 
   sightingForm() {
 
+    let loading = this.loadingCtrl.create({content: 'Cargando...'});
+    loading.present();
     this.birdsService.postSighting(this.bird_id, this.sightingFormGroup.get('sighting.place').value, this.latitude, this.longitude).subscribe(
       (data) => {
         let status = data ['status'];
+        loading.dismissAll();
         if(status=='OK'){
           console.log('sighting added');
+          let toast = this.toastCtrl.create({message: 'El avistamiento ha sido añadido', duration: 3000, position: 'bottom'});
+          toast.present();
           this.navCtrl.pop();
         }
       },
         (error) =>{
+          loading.dismissAll();
           console.error(error);
+          let toast = this.toastCtrl.create({message: 'Ha ocurrido un error', duration: 3000, position: 'bottom'});
+          toast.present();
         }
     )
   }
@@ -47,7 +57,6 @@ export class Avistamiento implements OnInit{
 
   // form initialised
   ngOnInit() {
-
     this.bird_id = this.navParams.get('bird_id');
 
     this.sightingFormGroup = new FormGroup({
@@ -65,7 +74,6 @@ export class Avistamiento implements OnInit{
     let options = {timeout: 10000, enableHighAccuracy: true, maximumAge: 3600};
     this.geolocation.getCurrentPosition(options).then((res) => {
 
-
       this.latitude = res.coords.latitude;
       this.longitude = res.coords.longitude;
 
@@ -74,6 +82,8 @@ export class Avistamiento implements OnInit{
       this.locationReady = true;
 
     }).catch((error) => {
+      let toast = this.toastCtrl.create({message: 'No se ha podido obtener la localización del dispositivo', showCloseButton:true, closeButtonText: 'Ok'});
+      toast.present();
       console.log('Error getting location', error);
     });
   }

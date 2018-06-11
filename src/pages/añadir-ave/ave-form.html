@@ -41,7 +41,7 @@
         <ion-input id="place" name="place" type="text" formControlName="place" (ionChange)="checkValidPlace()"></ion-input>
       </ion-item>
       <span *ngIf="!birdFormGroup.get('birdFormGroup.place').valid && birdFormGroup.get('birdFormGroup.place').touched" class="help-block">
-        <span *ngIf="birdFormGroup.get('birdFormGroup.place').errors['pattern']" class="error">El lugar no válidos.</span></span>
+        <span *ngIf="birdFormGroup.get('birdFormGroup.place').errors['pattern']" class="error">El lugar no es válido.</span></span>
       <button ion-button full class="button-dark" type="submit" [disabled]="!sightingValid || !birdFormGroup.valid">Añadir Ave</button>
     </div>
   </form>
