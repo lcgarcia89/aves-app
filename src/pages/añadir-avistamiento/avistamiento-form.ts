@@ -44,6 +44,11 @@ export class Avistamiento implements OnInit{
           toast.present();
           this.navCtrl.pop();
         }
+        if(status=='KO'){
+          console.log('error adding sighting');
+          let toast = this.toastCtrl.create({message: 'Error en la petición', duration: 3000, position: 'bottom'});
+          toast.present();
+        }
       },
         (error) =>{
           loading.dismissAll();
