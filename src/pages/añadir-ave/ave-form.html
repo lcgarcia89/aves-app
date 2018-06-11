@@ -22,7 +22,7 @@
         <ion-label name="description" for="description">
           <span class="input-label">Descripción</span>
         </ion-label>
-        <ion-textarea id="description" name="description" type="text" formControlName="description"></ion-textarea>
+        <ion-textarea ion-row="10" id="description" name="description" type="text" formControlName="description"></ion-textarea>
       </ion-item>
       <span *ngIf="!birdFormGroup.get('birdFormGroup.description').valid && birdFormGroup.get('birdFormGroup.description').touched" class="help-block">
         <span *ngIf="birdFormGroup.get('birdFormGroup.description').errors['pattern']" class="error">La descripción contiene caracteres no válidos.<br></span>
